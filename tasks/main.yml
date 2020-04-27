@@ -1,0 +1,55 @@
+---
+#Install RethinkDb from official repository
+
+- name: add rethinkdb public key
+  apt_key:
+    url: https://download.rethinkdb.com/apt/pubkey.gpg
+    state: present
+
+- name: Add rethinkdb repository
+  apt_repository:
+    repo: "deb http://download.rethinkdb.com/apt {{ ansible_distribution_release}} main"
+    state: present
+
+- name: add Rethinkdb package
+  apt:
+    name: rethinkdb={{ rethinkdb_version }}
+    state: present
+
+- name: Stop Rethinkdb Service
+  service:
+    name: rethinkdb
+    state: stopped
+    enabled: no 
+
+- name: Hold RDB current version
+  copy:
+    src: files/rethinkdb.pref
+    dest: /etc/apt/preferences.d/rethinkdb.pref
+
+- name: Create system Directory
+  file:
+    path: /usr/lib/systemd/system
+    state: directory
+
+- name: create log dir
+  file:
+    path: /var/log/rdb
+    owner: rethinkdb
+    group: rethinkdb
+    recurse: yes
+    state: directory
+
+- name: create start script for proxy
+  template:
+    dest: /usr/lib/systemd/system/rethinkdb@.service
+    src: rethinkdb@.service.j2
+  notify: daemon_reload
+
+- name: enable and start rethinkdb in proxy mode
+  systemd:
+    name: rethinkdb@proxy.service
+    daemon_reload: yes
+    enabled: yes
+    state: started
+

@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  role_name: rethinkdb-proxy
+  author: gpkfr
+  description: Rethinkdb Proxy Server for Gnu/Debian 10
+  company: Imelbox
+  license: license (BSD, MIT)
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: Debian
+      versions:
+        - 10
+
+  galaxy_tags:
+    - rethinkdb
+    - proxy
+    - debian
+

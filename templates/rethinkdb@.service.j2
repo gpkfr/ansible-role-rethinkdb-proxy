@@ -1,0 +1,19 @@
+[Unit]
+Description=RethinkDB database server in proxy mode
+[Service]
+User=rethinkdb
+Group=rethinkdb
+ExecStart=/usr/bin/rethinkdb proxy --bind all \
+{% if rethinkdb_joins is defined %}
+{% for rethinkdb_join in rethinkdb_joins %}
+    --join {{ rethinkdb_join.ip }}:{{ rethinkdb_join.port}} \
+{% endfor %}
+{% endif %}
+    --log-file /var/log/rdb/rdb_proxy.log
+Restart=always
+Restartsec=0
+KillMode=process
+PrivateTmp=true
+[Install]
+WantedBy=multi-user.target
+

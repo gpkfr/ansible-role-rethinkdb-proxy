@@ -1,0 +1,11 @@
+---
+# - name: restart rethinkdb
+  # service:
+    # name: rethinkdb
+    # state: restarted
+    # enabled: yes
+
+- name: daemon_reload
+  systemd:
+    daemon_reload: yes
+
