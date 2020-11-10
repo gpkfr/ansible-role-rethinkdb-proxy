@@ -1,5 +1,5 @@
 ---
-#Install RethinkDb from official repository
+# Install RethinkDb from official repository
 
 - name: add rethinkdb public key
   apt_key:
@@ -20,7 +20,7 @@
   service:
     name: rethinkdb
     state: stopped
-    enabled: no 
+    enabled: no
 
 - name: Hold RDB current version
   copy:
