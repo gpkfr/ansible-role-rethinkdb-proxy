@@ -11,7 +11,7 @@ ExecStart=/usr/bin/rethinkdb proxy --bind all \
 {% endif %}
     --log-file /var/log/rdb/rdb_proxy.log
 Restart=always
-Restartsec=0
+RestartSec=0
 KillMode=process
 PrivateTmp=true
 [Install]
